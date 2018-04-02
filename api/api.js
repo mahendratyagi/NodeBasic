@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const http = require('http');
 const mapRoutes = require('express-routes-mapper');
 const cors = require('cors');
+const path = require('path');
 
 /**
  * server configuration
@@ -43,7 +44,7 @@ app.use(helmet({
 // parsing the request bodys
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static('public'))
+app.use("/public/images", express.static(path.join(__dirname,'../public/Images')));
 
 // fill routes for express appliction
 app.use('/public', mappedOpenRoutes);

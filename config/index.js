@@ -5,5 +5,5 @@ module.exports = {
   keep: false,
   privateRoutes,
   publicRoutes,
-  port: '3200',
+  port: '9000',
 };

@@ -1,11 +1,15 @@
 const multer = require('multer');
 const User = require('../models/User');
+const Order = require('../models/Order');
+const jwt = require('jsonwebtoken');
 const authService = require('../services/auth.service');
 const bcryptService = require('../services/bcrypt.service');
+let filepath;
 const Storage = multer.diskStorage({
   destination: 'public/Images',
   filename: function(req, file, callback) {
     //console.log('filename ',file)
+    filepath = 'public/Images/'+file.fieldname + "_" + Date.now() + "_" + file.originalname;
     callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
   }
 });
@@ -49,8 +53,22 @@ const UserController = () => {
     imageUpload(req, res, function(err) {
       if (err) {
         return res.end("Something went wrong!");
+      }else{
+        User.find({ where: { id: 10 } })
+        .then((user) => {
+          if (user) {
+            user.updateAttributes({
+              image: filepath
+            })
+            .then((result) => {
+              console.log(result)
+              return res.end("Image Path Updated Sucessfully!.");
+            })
+          } else{
+            return res.end("User Not found");
+          }
+        })
       }
-      return res.end("File uploaded sucessfully!.");
     });
   };
 
@@ -112,6 +130,18 @@ const UserController = () => {
       });
   };
 
+  const getUserOrders = (req, res) => {
+    User.findAll({      
+      include: [{
+        model: Order,
+      }]
+    })
+    .then((details) => res.status(200).json({ details }))
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).json({ msg: 'Internal server error' });
+    });
+  };
 
   return {
     register,
@@ -119,7 +149,8 @@ const UserController = () => {
     login,
     validate,
     getAll,
-    upload
+    upload,
+    getUserOrders,
   };
 };
 

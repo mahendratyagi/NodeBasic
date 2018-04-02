@@ -37,7 +37,7 @@ const User = sequelize.define('User', {
   password: {
     type: Sequelize.STRING,
   },
-  img: { 
+  image: { 
     type: Sequelize.STRING,
   },
 }, { hooks, instanceMethods, tableName });
