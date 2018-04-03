@@ -17,24 +17,19 @@ const imageUpload = multer({storage: Storage}).single("img"); //Field name and m
 
 const UserController = () => {
   const register = (req, res) => {
-    console.log(req);
-    console.log('body');
-    console.log(req.body);
     const body = req.body;
 
     if (body.password === body.password2) {
-      console.log('true cond');
       return User
         .create({
           firstName: body.firstname,
           lastName: body.lastname,
           email: body.email,
+          userAccountType: 'Customer',
           password: body.password,
         })
         .then((user) => {
-          console.log('after create');
           const token = authService.issue({ id: user.id });
-
           return res.status(200).json({ token, user });
         })
         .catch((err) => {
@@ -48,7 +43,6 @@ const UserController = () => {
 
   const upload = (req, res) => {
     const body = req.body;
-    // console.log(req.body);
     imageUpload(req, res, function(err) {
       if (err) {
         return res.end("Something went wrong!");
@@ -60,7 +54,6 @@ const UserController = () => {
               image: filepath
             })
             .then((result) => {
-              console.log(result)
               return res.end("Image Path Updated Sucessfully!.");
             })
           } else{

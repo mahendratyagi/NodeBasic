@@ -5,14 +5,12 @@ const sequelize = require('../../config/database');
 
 const hooks = {
   beforeCreate(user) {
-    console.log('hooks');
     user.password = bcryptSevice.password(user); // eslint-disable-line no-param-reassign
   },
 };
 
 const instanceMethods = {
   toJSON() {
-    console.log('instance');
     const values = Object.assign({}, this.get());
 
     delete values.password;
@@ -33,6 +31,9 @@ const User = sequelize.define('User', {
   email: {
     type: Sequelize.STRING,
     unique: true,
+  },
+  userAccountType: {
+    type: Sequelize.STRING,
   },
   password: {
     type: Sequelize.STRING,

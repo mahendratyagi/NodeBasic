@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize');
-const bcryptSevice = require('../services/bcrypt.service');
 
 const sequelize = require('../../config/database');
 const User = require('./User');
