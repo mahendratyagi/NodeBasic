@@ -130,16 +130,23 @@ const UserController = () => {
   };
 
   const getUserOrders = (req, res) => {
-    User.findAll({      
-      include: [{
-        model: Order,
-      }]
-    })
-    .then((details) => res.status(200).json({ details }))
-    .catch((err) => {
-      console.log(err);
-      return res.status(500).json({ msg: 'Internal server error' });
-    });
+    if(req.token.id) {
+      User.findAll({      
+        include: [{
+          model: Order,
+        }],
+        where: {
+          id: req.token.id
+        },
+      })
+      .then((details) => res.status(200).json({ details }))
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json({ msg: 'Internal server error' });
+      });
+    } else{
+      return res.status(200).json({ msg: 'No User' });
+    }    
   };
 
   return {
