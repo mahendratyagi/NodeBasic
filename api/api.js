@@ -45,14 +45,12 @@ app.use(helmet({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/public/images", express.static(path.join(__dirname,'../public/Images')));
-
 // fill routes for express appliction
 app.use('/public', mappedOpenRoutes);
+app.all('/private/*', (req, res, next) => auth(req, res, next));
 app.use('/private', mappedAuthRoutes);
 
 // secure your private routes with jwt authentication middleware
-app.all('/private/*', (req, res, next) => auth(req, res, next));
-
 server.listen(config.port, () => {
   if (environment !== 'production' &&
     environment !== 'development' &&
