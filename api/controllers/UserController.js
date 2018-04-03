@@ -1,7 +1,6 @@
 const multer = require('multer');
 const User = require('../models/User');
 const Order = require('../models/Order');
-const jwt = require('jsonwebtoken');
 const authService = require('../services/auth.service');
 const bcryptService = require('../services/bcrypt.service');
 let filepath;

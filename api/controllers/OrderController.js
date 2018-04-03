@@ -2,15 +2,13 @@ const Order = require('../models/Order');
 
 const OrderController = () => {
   const insertOrder = (req, res) => {
-    console.log('inside order');
     const body = req.body;
-
-    if (body.userID) {
+    if (req.token.id) {
       return Order
         .create({
           orderDate: body.orderDate,
           orderTime: body.orderTime,
-          userID: body.userID,
+          UserId: req.token.id,
         })
         .then((order) => {
           return res.status(200).json({ order });
