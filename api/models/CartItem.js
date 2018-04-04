@@ -6,17 +6,20 @@ const Cart = require('./Cart');
 const tableName = 'cartItems';
 
 const CartItem = sequelize.define('CartItem', {
-  menuItemName: {
-    type: Sequelize.STRING,
-    unique: true
+  cartDate: {
+    type: Sequelize.DATEONLY,
+    allowNull: false,
+    defaultValue: Sequelize.NOW
   },
-  menuItemPrice: {
-    type: Sequelize.FLOAT,
-    defaultValue: 0.00
+  cartTime: {
+    type: Sequelize.TIME,
+    allowNull: false,
+    defaultValue: Sequelize.NOW
   },
 }, { tableName });
 
-CartItem.belongsTo(MenuItem); 
 CartItem.belongsTo(Cart); 
+CartItem.belongsTo(MenuItem); 
+
 
 module.exports = CartItem;

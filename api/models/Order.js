@@ -16,7 +16,7 @@ const Order = sequelize.define('Order', {
     allowNull: false,
     defaultValue: Sequelize.NOW
   },
-}, { /*instanceMethods,*/ tableName });
+}, { tableName });
 
 Order.belongsTo(User); 
 User.hasMany(Order);

@@ -90,14 +90,15 @@ const UserController = () => {
     const body = req.body;
 
     if (req.token.id) {
-      return Cart
+      return CartItem
       .create({
         cartDate: body.cartDate,
         cartTime: body.cartTime,
-        UserId: req.token.id
+        MenuItemId: body.MenuItemId,
+        CartId: req.params.cartId
       })
-      .then((cart) => {
-        return res.status(200).json({ cart });
+      .then((cartItem) => {
+        return res.status(200).json({ cartItem });
       })
       .catch((err) => {
         console.log(err);
