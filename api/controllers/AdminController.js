@@ -1,5 +1,6 @@
 const Venue = require('../models/Venue');
 const User = require('../models/User');
+const Menu = require('../models/Menu');
 const adminService = require('../services/admin.service');
 
 const AdminController = () => {
@@ -7,7 +8,6 @@ const AdminController = () => {
     const body = req.body;
 
     if (req.token.id) {
-      console.log(req.token.id);
       adminService.getUserType(req.token.id)
       .then((isAdmin) => {
         if(isAdmin){
@@ -37,8 +37,40 @@ const AdminController = () => {
     }
   };
 
+  const insertMenu = (req, res) => {
+    const body = req.body;
+
+    if (req.token.id) {
+      adminService.getUserType(req.token.id)
+      .then((isAdmin) => {
+        if(isAdmin){
+          return Menu
+          .create({
+            menuType: body.menuType,
+            menuSort: body.menuSort,
+            VenueId: body.VenueId,
+          })
+          .then((menu) => {
+            return res.status(200).json({ menu });
+          })
+          .catch((err) => {
+            console.log(err);
+            return res.status(500).json({ msg: 'Internal server error' });
+          });
+        }else{
+          return res.status(200).json({ 'isAdmin' : false });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(200).json({ 'msg' : 'Error' });
+      });
+    }
+  };
+
   return {
     insertVenue,
+    insertMenu,
   };
 };
 

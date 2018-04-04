@@ -4,4 +4,5 @@ module.exports = {
   'POST /upload': 'UserController.upload',
   'POST /order': 'OrderController.insertOrder',
   'POST /venue': 'AdminController.insertVenue',
+  'POST /menu': 'AdminController.insertMenu',
 };
