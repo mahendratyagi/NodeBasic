@@ -1,6 +1,7 @@
 const multer = require('multer');
 const User = require('../models/User');
 const Order = require('../models/Order');
+const Cart = require('../models/Cart');
 const authService = require('../services/auth.service');
 const bcryptService = require('../services/bcrypt.service');
 let filepath;
@@ -62,6 +63,26 @@ const UserController = () => {
         })
       }
     });
+  };
+
+  const insertCart = (req, res) => {
+    const body = req.body;
+
+    if (req.token.id) {
+      return Cart
+      .create({
+        cartDate: body.cartDate,
+        cartTime: body.cartTime,
+        UserId: req.token.id
+      })
+      .then((cart) => {
+        return res.status(200).json({ cart });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json({ msg: 'Internal server error' });
+      });
+    }
   };
 
   const testpage = (req, res) => {
@@ -150,6 +171,7 @@ const UserController = () => {
     getAll,
     upload,
     getUserOrders,
+    insertCart,
   };
 };
 
