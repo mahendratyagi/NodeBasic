@@ -7,5 +7,6 @@ module.exports = {
   'POST /menu': 'AdminController.insertMenu',
   'POST /menu/:menuId/menuItem': 'AdminController.insertMenuItem',
   'POST /cart': 'UserController.insertCart',
-  'POST /cart/:cartId/cartItem': 'UserController.insertCartItems',   
+  'POST /cart/:cartId/cartItem': 'UserController.insertCartItems',
+  'POST /order/:orderId/orderItems': 'OrderController.dispatchCartItems',   
 };
