@@ -27,8 +27,18 @@ const OrderController = () => {
   const dispatchCartItems = (req, res) => {
     const body = req.body;
     if (req.token.id) {
-      console.log(req.params.orderId);
-      return orderService.getOrderItems(req.token.id);
+      return orderService.getOrderItems(req.token.id)
+      .then((cartItems) => {
+        if (!cartItems) {
+            return false;
+        } else{
+          return res.status(200).json({ cartItems });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
       /*return OrderItem
         .create({
           orderDate: body.orderDate,

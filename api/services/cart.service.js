@@ -7,19 +7,20 @@ module.exports = {
 		    where: {
 		        UserId: userid,
 		  	},
+		  	raw: true,
 		})
 		.then((cart) => {
 	        if (!cart) {
 	            return false;
 	        } else{
-	        	console.log(cart)
-	        	return CartItem.find({
+	        	return CartItem.findAll({
 				    where: {
 				        CartId: cart.id,
 				  	},
+				  	raw: true,
 				})
 				.then((cartItems) => {
-			        if (!cart) {
+			        if (!cartItems) {
 			            return false;
 			        } else{
 			        	return cartItems;
