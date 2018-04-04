@@ -2,13 +2,14 @@ const multer = require('multer');
 const User = require('../models/User');
 const Order = require('../models/Order');
 const Cart = require('../models/Cart');
+const CartItem = require('../models/CartItem');
 const authService = require('../services/auth.service');
 const bcryptService = require('../services/bcrypt.service');
+
 let filepath;
 const Storage = multer.diskStorage({
   destination: 'public/Images',
   filename: function(req, file, callback) {
-    //console.log('filename ',file)
     filepath = 'public/Images/'+file.fieldname + "_" + Date.now() + "_" + file.originalname;
     callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
   }
@@ -66,6 +67,26 @@ const UserController = () => {
   };
 
   const insertCart = (req, res) => {
+    const body = req.body;
+
+    if (req.token.id) {
+      return Cart
+      .create({
+        cartDate: body.cartDate,
+        cartTime: body.cartTime,
+        UserId: req.token.id
+      })
+      .then((cart) => {
+        return res.status(200).json({ cart });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json({ msg: 'Internal server error' });
+      });
+    }
+  };
+
+  const insertCartItems = (req, res) => {
     const body = req.body;
 
     if (req.token.id) {
@@ -172,6 +193,7 @@ const UserController = () => {
     upload,
     getUserOrders,
     insertCart,
+    insertCartItems
   };
 };
 

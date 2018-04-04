@@ -5,6 +5,6 @@ module.exports = {
   'POST /order': 'OrderController.insertOrder',
   'POST /venue': 'AdminController.insertVenue',
   'POST /menu': 'AdminController.insertMenu',
-  'POST /menuItem': 'AdminController.insertMenuItem',
+  'POST /menu/:menuId/menuItem': 'AdminController.insertMenuItem',
   'POST /cart': 'UserController.insertCart',  
 };

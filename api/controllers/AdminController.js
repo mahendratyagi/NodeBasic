@@ -71,7 +71,6 @@ const AdminController = () => {
 
   const insertMenuItem = (req, res) => {
     const body = req.body;
-
     if (req.token.id) {
       adminService.getUserType(req.token.id)
       .then((isAdmin) => {
@@ -80,7 +79,7 @@ const AdminController = () => {
           .create({
             menuItemName: body.menuItemName,
             menuItemPrice: body.menuItemPrice,
-            MenuId: body.MenuId,
+            MenuId: req.params.menuId,
           })
           .then((menuItem) => {
             return res.status(200).json({ menuItem });
