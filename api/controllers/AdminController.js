@@ -1,7 +1,4 @@
 const Venue = require('../models/Venue');
-const User = require('../models/User');
-const Order = require('../models/Order');
-const OrderItem = require('../models/OrderItem');
 const Menu = require('../models/Menu');
 const MenuItem = require('../models/MenuItem');
 const adminService = require('../services/admin.service');
