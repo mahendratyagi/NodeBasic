@@ -18,10 +18,13 @@ const Cart = sequelize.define('Cart', {
   },
   UserId: {
     type: Sequelize.INTEGER,
-    unique: true
+    unique: true,
+    references: {
+      model: User,
+      key: 'id',
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+    }
   },
 }, { tableName });
-
-User.hasOne(Cart);
 
 module.exports = Cart;
