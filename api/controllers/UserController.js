@@ -45,7 +45,7 @@ const UserController = () => {
   };
 
   const upload = (req, res) => {
-    //POST localhost:9000/private/upload
+    //PUT localhost:9000/private/user/image
     const body = req.body;
     imageUpload(req, res, function(err) {
       if (err) {
