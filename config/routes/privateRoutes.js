@@ -3,6 +3,8 @@ module.exports = {
   'GET /user/:userId/orders': 'UserController.getUserOrders',
   'GET /user/orders': 'AdminController.getAllUserOrders',
   'PUT /user/image': 'UserController.upload',
+  'PUT /order/:orderId/status/cancel': 'OrderController.cancelOrder',
+  'DELETE /order/:orderId': 'AdminController.deleteOrder',
   'POST /order': 'OrderController.insertOrder',
   'POST /venue': 'AdminController.insertVenue',
   'POST /menu': 'AdminController.insertMenu',

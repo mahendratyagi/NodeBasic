@@ -3,6 +3,7 @@ const Menu = require('../models/Menu');
 const MenuItem = require('../models/MenuItem');
 const adminService = require('../services/admin.service');
 const userService = require('../services/user.service');
+const orderService = require('../services/order.service');
 
 const AdminController = () => {
   //POST localhost:9000/private/venue
@@ -120,11 +121,30 @@ const AdminController = () => {
     }
   };
 
+  const deleteOrder = (req, res) => {
+    if (req.token.id) {      
+      adminService.getUserType(req.token.id)
+      .then((isAdmin) => {
+        if(isAdmin){
+          return orderService.deleteOrder(req.params.orderId,res);          
+        } else{
+          return res.status(200).json({ 'isAdmin' : false });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(200).json({ 'msg' : 'Error' });
+      });
+    }
+  };
+  
+
   return {
     insertVenue,
     insertMenu,
     insertMenuItem,
     getAllUserOrders,
+    deleteOrder,
   };
 };
 

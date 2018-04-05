@@ -27,4 +27,6 @@ const Cart = sequelize.define('Cart', {
   },
 }, { tableName });
 
+Cart.belongsTo(User);
+
 module.exports = Cart;

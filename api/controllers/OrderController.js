@@ -74,9 +74,23 @@ const OrderController = () => {
     }    
   };
 
+  //PUT localhost:9000/private/order/:orderId/status/cancel
+  const cancelOrder = (req, res) => {
+    if(req.token.id){
+      if(req.params.orderId){
+        return orderService.cancelOrder(req.params.orderId,res);
+      } else{
+        return res.status(400).json({ msg: 'Bad Request: Order Empty' });
+      }
+    }else{
+      return res.status(400).json({ msg: 'Bad Request: User not found' });
+    }
+  };
+
   return {
     insertOrder,
     dispatchCartItems,
+    cancelOrder,
   };
 
 

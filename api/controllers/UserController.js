@@ -44,8 +44,8 @@ const UserController = () => {
     return res.status(400).json({ msg: 'Passwords don\'t match' });
   };
 
+  //PUT localhost:9000/private/user/image
   const upload = (req, res) => {
-    //PUT localhost:9000/private/user/image
     const body = req.body;
     imageUpload(req, res, function(err) {
       if (err) {
@@ -68,8 +68,8 @@ const UserController = () => {
     });
   };
 
+  //POST localhost:9000/private/cart
   const insertCart = (req, res) => {
-    //POST localhost:9000/private/cart
     const body = req.body;
 
     if (req.token.id) {
@@ -111,13 +111,13 @@ const UserController = () => {
     }
   };
 
+  //POST localhost:9000/public/testpage
   const testpage = (req, res) => {
-    //POST localhost:9000/public/testpage
     res.send('App is running!');
-  };
+  }; 
 
+  //POST localhost:9000/public/login
   const login = (req, res) => {
-    //POST localhost:9000/public/login
     const email = req.body.email;
     const password = req.body.password;
 
@@ -148,8 +148,8 @@ const UserController = () => {
     }
   };
 
+  //POST localhost:9000/public/validate
   const validate = (req, res) => {
-    //POST localhost:9000/public/validate
     const tokenToVerify = req.body.token;
 
     authService
@@ -203,7 +203,7 @@ const UserController = () => {
     upload,
     getUserOrders,
     insertCart,
-    insertCartItems
+    insertCartItems,
   };
 };
 
