@@ -5,6 +5,7 @@ const MenuItem = require('../models/MenuItem');
 const adminService = require('../services/admin.service');
 
 const AdminController = () => {
+  //POST localhost:9000/private/venue
   const insertVenue = (req, res) => {
     const body = req.body;
 
@@ -38,6 +39,7 @@ const AdminController = () => {
     }
   };
 
+  //POST localhost:9000/private/menu
   const insertMenu = (req, res) => {
     const body = req.body;
 
@@ -69,6 +71,7 @@ const AdminController = () => {
     }
   };
 
+  //POST localhost:9000/private/menu/:menuId/menuItem
   const insertMenuItem = (req, res) => {
     const body = req.body;
     if (req.token.id) {

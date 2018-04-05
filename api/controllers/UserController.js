@@ -18,6 +18,7 @@ const Storage = multer.diskStorage({
 const imageUpload = multer({storage: Storage}).single("img"); //Field name and max count
 
 const UserController = () => {
+  //POST localhost:9000/public/register
   const register = (req, res) => {
     const body = req.body;
 
@@ -44,6 +45,7 @@ const UserController = () => {
   };
 
   const upload = (req, res) => {
+    //POST localhost:9000/private/upload
     const body = req.body;
     imageUpload(req, res, function(err) {
       if (err) {
@@ -67,6 +69,7 @@ const UserController = () => {
   };
 
   const insertCart = (req, res) => {
+    //POST localhost:9000/private/cart
     const body = req.body;
 
     if (req.token.id) {
@@ -87,6 +90,7 @@ const UserController = () => {
   };
 
   const insertCartItems = (req, res) => {
+    //POST localhost:9000/private/cart/:cartId/cartItem
     const body = req.body;
 
     if (req.token.id) {
@@ -108,10 +112,12 @@ const UserController = () => {
   };
 
   const testpage = (req, res) => {
+    //POST localhost:9000/public/testpage
     res.send('App is running!');
   };
 
   const login = (req, res) => {
+    //POST localhost:9000/public/login
     const email = req.body.email;
     const password = req.body.password;
 
@@ -143,6 +149,7 @@ const UserController = () => {
   };
 
   const validate = (req, res) => {
+    //POST localhost:9000/public/validate
     const tokenToVerify = req.body.token;
 
     authService
@@ -155,6 +162,7 @@ const UserController = () => {
       });
   };
 
+  //GET localhost:9000/private/users
   const getAll = (req, res) => {
     User
       .findAll()
@@ -165,6 +173,7 @@ const UserController = () => {
       });
   };
 
+  //POST localhost:9000/private/userOrders
   const getUserOrders = (req, res) => {
     if(req.token.id) {
       User.findAll({      

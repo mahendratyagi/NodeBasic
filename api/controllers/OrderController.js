@@ -5,6 +5,7 @@ const async = require("async");
 
 
 const OrderController = () => {
+  //POST localhost:9000/private/order
   const insertOrder = (req, res) => {
     const body = req.body;
     if (req.token.id) {
@@ -26,6 +27,7 @@ const OrderController = () => {
     return res.status(400).json({ msg: 'Invalid Order' });
   };
 
+  //POST localhost:9000/private/order/:orderId/orderItems
   const dispatchCartItems = (req, res) => {
     let orderItems = [];
     const body = req.body;
