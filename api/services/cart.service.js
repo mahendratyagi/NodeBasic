@@ -1,4 +1,5 @@
 const Cart = require('../models/Cart');
+const MenuItem = require('../models/MenuItem');
 const CartItem = require('../models/CartItem');
 
 module.exports = {
@@ -17,6 +18,10 @@ module.exports = {
 				    where: {
 				        CartId: cart.id,
 				  	},
+				  	include: [{
+				  		attributes: ['menuItemPrice'],
+			          	model: MenuItem,
+			        }],
 				  	raw: true,
 				})
 				.then((cartItems) => {
