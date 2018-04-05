@@ -5,7 +5,7 @@ const OrderItem = require('../models/OrderItem');
 const Menu = require('../models/Menu');
 const MenuItem = require('../models/MenuItem');
 const adminService = require('../services/admin.service');
-const async = require("async");
+const userService = require('../services/user.service');
 
 const AdminController = () => {
   //POST localhost:9000/private/venue
@@ -107,59 +107,11 @@ const AdminController = () => {
 
   //POST localhost:9000/private/user/orders
   const getAllUserOrders = (req, res) => {
-    if (req.token.id) {
-      userOrders = [];
+    if (req.token.id) {      
       adminService.getUserType(req.token.id)
       .then((isAdmin) => {
         if(isAdmin){
-          return User.findAll({
-            raw: true,
-          })
-          .then((users) => {
-            if (!users) {
-              return false;
-            } else{
-              let i = 0;
-              async.each(users,
-                function(user, callback){
-                  Order.findAll({
-                    where: {
-                      UserId: user.id
-                    },
-                    include: [{
-                      attributes: ['orderStatus' , 'MenuItemId'],
-                      model: OrderItem,
-                      include: [{
-                        model: MenuItem,
-                      }],
-                    }],
-                  })
-                  .then((orders) => {
-                    users[i]['orders'] = orders;
-                    i++;
-                    userOrders.push(orders);
-                    callback();
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                    return res.status(500).json({ msg: 'Could Not Create Order' });
-                  });
-                },            
-                function(err){
-                  if(err) {
-                    console.log(err);
-                    return res.status(400).json({ msg: 'Could Not Dispatch Orders' });
-                  } else{
-                    return res.status(200).json({ users });
-                  }
-                }
-              );
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            return res.status(400).json({ 'msg' : err });
-          });
+          return userService.getAllUserOrders(res);          
         } else{
           return res.status(200).json({ 'isAdmin' : false });
         }
