@@ -1,6 +1,6 @@
 module.exports = {
   'GET /users': 'UserController.getAll',
-  'POST /userOrders': 'UserController.getUserOrders',
+  'GET /user/:userId/orders': 'UserController.getUserOrders',
   'POST /upload': 'UserController.upload',
   'POST /order': 'OrderController.insertOrder',
   'POST /venue': 'AdminController.insertVenue',
