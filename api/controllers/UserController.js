@@ -68,6 +68,33 @@ const UserController = () => {
     });
   };
 
+  //PUT localhost:9000/private/user
+  const updateUser = (req, res) => {
+    const body = req.body;
+    if (req.token.id) {
+      return User
+      .update({
+        firstName: body.firstName,
+        lastName: body.lastName,
+        email: body.email,
+        password: body.password,        
+      },{
+        where: {
+          id: req.token.id
+        },
+      })
+      .then((updatedUser) => {
+        return res.status(200).json({ updatedUser });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json({ msg: 'Could Not Update User' });
+      });
+    } else{
+      return res.status(400).json({ msg: 'No User' });
+    }
+  };
+
   //POST localhost:9000/private/cart
   const insertCart = (req, res) => {
     const body = req.body;
@@ -204,6 +231,7 @@ const UserController = () => {
     getUserOrders,
     insertCart,
     insertCartItems,
+    updateUser,
   };
 };
 
