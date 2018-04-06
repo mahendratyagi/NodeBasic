@@ -121,6 +121,7 @@ const AdminController = () => {
     }
   };
 
+  //DELETE localhost:9000/private/order/:orderId   
   const deleteOrder = (req, res) => {
     if (req.token.id) {      
       adminService.getUserType(req.token.id)
