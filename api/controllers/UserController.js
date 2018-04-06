@@ -73,18 +73,25 @@ const UserController = () => {
     const body = req.body;
     if (req.token.id) {
       return User
-      .update({
-        firstName: body.firstName,
-        lastName: body.lastName,
-        email: body.email,
-        password: body.password,        
-      },{
+      .findOne({
         where: {
           id: req.token.id
         },
       })
-      .then((updatedUser) => {
-        return res.status(200).json({ updatedUser });
+      .then((User) => {
+        return User.update({
+          firstName: body.firstname,
+          lastName: body.lastname,
+          email: body.email,
+          password: body.password,
+        })
+        .then((updatedUser) => {
+          return res.status(200).json({ updatedUser });
+        })
+        .catch((err) => {
+          console.log(err);
+          return res.status(500).json({ msg: 'Could Not Update User' });
+        });
       })
       .catch((err) => {
         console.log(err);

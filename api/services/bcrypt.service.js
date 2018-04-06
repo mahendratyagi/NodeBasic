@@ -3,8 +3,12 @@ const bcrypt = require('bcrypt-nodejs');
 module.exports = {
   password: (user) => {
     const salt = bcrypt.genSaltSync();
-    const hash = bcrypt.hashSync(user.password, salt);
-
+    let hash;
+    if(user.password){
+    	hash = bcrypt.hashSync(user.password, salt);
+    } else{
+    	hash = bcrypt.hashSync(user.attributes.password, salt);
+    }
     return hash;
   },
   comparePassword: (password, hash) => (
