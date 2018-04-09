@@ -25,6 +25,17 @@ const AdminController = () => {
           if(validationMsg.length){
             return res.status(400).json({ validationError: validationMsg });
           } else{
+            let validationMsg = [];
+            let i = 0;
+            let isInvalid = 0;
+            if(!validationHelper.validNumbers(body.venueZip)){
+              validationMsg[i] = 'VenueZip Should Contain Only Numbers';
+              i++;
+              isInvalid = 1;
+            }
+            if(isInvalid == 1){
+              return res.status(400).json({ validationError: validationMsg });
+            }
             return Venue
             .create({
               venueName: body.venueName,
@@ -107,6 +118,17 @@ const AdminController = () => {
           if(validationMsg.length){
             return res.status(400).json({ validationError: validationMsg });
           } else{
+            let validationMsg = [];
+            let i = 0;
+            let isInvalid = 0;
+            if(!validationHelper.validFloat(body.menuItemPrice)){
+              validationMsg[i] = 'Price Is Invalid Should Be Valid Decimal';
+              i++;
+              isInvalid = 1;
+            }
+            if(isInvalid == 1){
+              return res.status(400).json({ validationError: validationMsg });
+            }
             return MenuItem
             .create({
               menuItemName: body.menuItemName,

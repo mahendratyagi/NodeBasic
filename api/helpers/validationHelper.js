@@ -23,4 +23,12 @@ module.exports = {
 		const passReg = /^(?=.{8,})?$/;
   		return passReg.test(password);
 	},
+	validNumbers: (numbers) => {
+		const numReg = /^[0-9]+$/;
+  		return numReg.test(numbers);
+	},
+	validFloat: (numbers) => {
+		const decReg = /^-?\d*(\.\d+)?$/;
+  		return decReg.test(numbers);
+	},
 };

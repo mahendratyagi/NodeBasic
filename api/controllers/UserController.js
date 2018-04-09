@@ -168,6 +168,7 @@ const UserController = () => {
     const body = req.body;
 
     if (req.token.id) {
+      
       return CartItem
       .create({
         cartDate: body.cartDate,
