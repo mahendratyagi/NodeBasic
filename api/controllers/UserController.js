@@ -48,25 +48,29 @@ const UserController = () => {
   //PUT localhost:9000/private/user/image
   const upload = (req, res) => {
     const body = req.body;
-    imageUpload(req, res, function(err) {
-      if (err) {
-        return res.end("Something went wrong!");
-      }else{
-        User.find({ where: { id: 10 } })
-        .then((user) => {
-          if (user) {
-            user.updateAttributes({
-              image: filepath
-            })
-            .then((result) => {
-              return res.end("Image Path Updated Sucessfully!.");
-            })
-          } else{
-            return res.end("User Not found");
-          }
-        })
-      }
-    });
+    if(req.token.id) {
+      imageUpload(req, res, function(err) {
+        if (err) {
+          return res.end("Something went wrong!");
+        }else{
+          User.find({ where: { id: req.token.id } })
+          .then((user) => {
+            if (user) {
+              user.updateAttributes({
+                image: filepath
+              })
+              .then((result) => {
+                return res.end("Image Path Updated Sucessfully!.");
+              })
+            } else{
+              return res.end("User Not found");
+            }
+          })
+        }
+      });
+    } else{
+      return res.end("User Not found");
+    }   
   };
 
   //PUT localhost:9000/private/user
