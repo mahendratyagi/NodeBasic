@@ -5,6 +5,7 @@ const Cart = require('../models/Cart');
 const CartItem = require('../models/CartItem');
 const authService = require('../services/auth.service');
 const bcryptService = require('../services/bcrypt.service');
+const _ = require('lodash');
 
 let filepath;
 const Storage = multer.diskStorage({
@@ -146,9 +147,9 @@ const UserController = () => {
   };
 
   //POST localhost:9000/public/testpage
-  const testpage = (req, res) => {
+  const testpage = (req, res) => {    
     res.send('App is running!');
-  }; 
+  };   
 
   //POST localhost:9000/public/login
   const login = (req, res) => {
