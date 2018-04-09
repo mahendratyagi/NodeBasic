@@ -23,7 +23,7 @@ const UserController = () => {
   //POST localhost:9000/public/register
   const register = (req, res) => {
     const body = req.body;
-    const validationMsg = validationHelper.checkNotEmptyFields({
+    let validationMsg = validationHelper.checkNotEmptyFields({
       firstName: body.firstname,
       lastName: body.lastname,
       email: body.email,
@@ -31,7 +31,32 @@ const UserController = () => {
     });
     if(validationMsg.length){
       return res.status(400).json({ validationError: validationMsg });
-    } else{
+    } else{ 
+      let i = 0;
+      let isInvalid = 0;     
+      if(!validationHelper.validName(body.firstname)){
+        validationMsg[i] = 'First Name Can Only Contain Characters';
+        i++;
+        isInvalid = 1;
+      } 
+      if(!validationHelper.validName(body.lastname)){
+        validationMsg[i] = 'Last Name Can Only Contain Characters';
+        i++;
+        isInvalid = 1;
+      } 
+      if(!validationHelper.validEmail(body.email)){
+        validationMsg[i] = 'Invalid Email Address';
+        i++;
+        isInvalid = 1;
+      } 
+      if(!validationHelper.validPassword(body.password)){
+        validationMsg[i] = 'Password Should Contain Atleast 8 Characters';
+        i++;
+        isInvalid = 1;
+      }
+      if(isInvalid == 1){
+        return res.status(400).json({ validationError: validationMsg });
+      }
       if (body.password === body.password2) {
         return User
           .create({
@@ -172,28 +197,28 @@ const UserController = () => {
 
     if (email && password) {
       User
-        .findOne({
-          where: {
-            email,
-          },
-        })
-        .then((user) => {
-          if (!user) {
-            return res.status(400).json({ msg: 'Bad Request: User not found' });
-          }
+      .findOne({
+        where: {
+          email,
+        },
+      })
+      .then((user) => {
+        if (!user) {
+          return res.status(400).json({ msg: 'Bad Request: User not found' });
+        }
 
-          if (bcryptService.comparePassword(password, user.password)) {
-            const token = authService.issue({ id: user.id });
+        if (bcryptService.comparePassword(password, user.password)) {
+          const token = authService.issue({ id: user.id });
 
-            return res.status(200).json({ token, user });
-          }
+          return res.status(200).json({ token, user });
+        }
 
-          return res.status(401).json({ msg: 'Unauthorized' });
-        })
-        .catch((err) => {
-          console.log(err);
-          return res.status(500).json({ msg: 'Internal server error' });
-        });
+        return res.status(401).json({ msg: 'Unauthorized' });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json({ msg: 'Internal server error' });
+      });
     }
   };
 

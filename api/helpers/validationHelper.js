@@ -10,5 +10,17 @@ module.exports = {
 		    }
 		}
 		return message;
-	}  	
+	},
+	validName: (name) => {
+		const nameReg = /^[A-z]+$/;
+  		return nameReg.test(name);
+	},
+	validEmail: (email) => {
+		const emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+  		return emailReg.test(email);
+	},	
+	validPassword: (password) => {
+		const passReg = /^(?=.{8,})?$/;
+  		return passReg.test(password);
+	},
 };
