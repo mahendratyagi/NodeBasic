@@ -4,6 +4,7 @@ const MenuItem = require('../models/MenuItem');
 const adminService = require('../services/admin.service');
 const userService = require('../services/user.service');
 const orderService = require('../services/order.service');
+const validationHelper = require('../helpers/validationHelper');
 
 const AdminController = () => {
   //POST localhost:9000/private/venue
@@ -14,21 +15,32 @@ const AdminController = () => {
       adminService.getUserType(req.token.id)
       .then((isAdmin) => {
         if(isAdmin){
-          return Venue
-          .create({
+          const validationMsg = validationHelper.checkNotEmptyFields({
             venueName: body.venueName,
             venueAddress: body.venueAddress,
             venueCity: body.venueCity,
             venueState: body.venueState,
             venueZip: body.venueZip,
-          })
-          .then((venue) => {
-            return res.status(200).json({ venue });
-          })
-          .catch((err) => {
-            console.log(err);
-            return res.status(500).json({ msg: 'Internal server error' });
           });
+          if(validationMsg.length){
+            return res.status(400).json({ validationError: validationMsg });
+          } else{
+            return Venue
+            .create({
+              venueName: body.venueName,
+              venueAddress: body.venueAddress,
+              venueCity: body.venueCity,
+              venueState: body.venueState,
+              venueZip: body.venueZip,
+            })
+            .then((venue) => {
+              return res.status(200).json({ venue });
+            })
+            .catch((err) => {
+              console.log(err);
+              return res.status(500).json({ msg: 'Internal server error' });
+            });
+          }          
         }else{
           return res.status(200).json({ 'isAdmin' : false });
         }
@@ -48,19 +60,27 @@ const AdminController = () => {
       adminService.getUserType(req.token.id)
       .then((isAdmin) => {
         if(isAdmin){
-          return Menu
-          .create({
+          const validationMsg = validationHelper.checkNotEmptyFields({
             menuType: body.menuType,
-            menuSort: body.menuSort,
             VenueId: body.VenueId,
-          })
-          .then((menu) => {
-            return res.status(200).json({ menu });
-          })
-          .catch((err) => {
-            console.log(err);
-            return res.status(500).json({ msg: 'Internal server error' });
           });
+          if(validationMsg.length){
+            return res.status(400).json({ validationError: validationMsg });
+          } else{
+            return Menu
+            .create({
+              menuType: body.menuType,
+              menuSort: body.menuSort,
+              VenueId: body.VenueId,
+            })
+            .then((menu) => {
+              return res.status(200).json({ menu });
+            })
+            .catch((err) => {
+              console.log(err);
+              return res.status(500).json({ msg: 'Internal server error' });
+            });
+          }         
         }else{
           return res.status(200).json({ 'isAdmin' : false });
         }
@@ -79,19 +99,28 @@ const AdminController = () => {
       adminService.getUserType(req.token.id)
       .then((isAdmin) => {
         if(isAdmin){
-          return MenuItem
-          .create({
+          const validationMsg = validationHelper.checkNotEmptyFields({
             menuItemName: body.menuItemName,
             menuItemPrice: body.menuItemPrice,
             MenuId: req.params.menuId,
-          })
-          .then((menuItem) => {
-            return res.status(200).json({ menuItem });
-          })
-          .catch((err) => {
-            console.log(err);
-            return res.status(500).json({ msg: 'Internal server error' });
           });
+          if(validationMsg.length){
+            return res.status(400).json({ validationError: validationMsg });
+          } else{
+            return MenuItem
+            .create({
+              menuItemName: body.menuItemName,
+              menuItemPrice: body.menuItemPrice,
+              MenuId: req.params.menuId,
+            })
+            .then((menuItem) => {
+              return res.status(200).json({ menuItem });
+            })
+            .catch((err) => {
+              console.log(err);
+              return res.status(500).json({ msg: 'Internal server error' });
+            });
+          }          
         }else{
           return res.status(200).json({ 'isAdmin' : false });
         }

@@ -80,7 +80,7 @@ const OrderController = () => {
       if(req.params.orderId){
         return orderService.cancelOrder(req.params.orderId,res);
       } else{
-        return res.status(400).json({ msg: 'Bad Request: Order Empty' });
+        return res.status(400).json({ msg: 'Bad Request: No Order Id In Request' });
       }
     }else{
       return res.status(400).json({ msg: 'Bad Request: User not found' });

@@ -5,6 +5,7 @@ const Cart = require('../models/Cart');
 const CartItem = require('../models/CartItem');
 const authService = require('../services/auth.service');
 const bcryptService = require('../services/bcrypt.service');
+const validationHelper = require('../helpers/validationHelper');
 const _ = require('lodash');
 
 let filepath;
@@ -22,27 +23,36 @@ const UserController = () => {
   //POST localhost:9000/public/register
   const register = (req, res) => {
     const body = req.body;
-
-    if (body.password === body.password2) {
-      return User
-        .create({
-          firstName: body.firstname,
-          lastName: body.lastname,
-          email: body.email,
-          userAccountType: 'Customer',
-          password: body.password,
-        })
-        .then((user) => {
-          const token = authService.issue({ id: user.id });
-          return res.status(200).json({ token, user });
-        })
-        .catch((err) => {
-          console.log(err);
-          return res.status(500).json({ msg: 'Internal server error' });
-        });
-    }
-
-    return res.status(400).json({ msg: 'Passwords don\'t match' });
+    const validationMsg = validationHelper.checkNotEmptyFields({
+      firstName: body.firstname,
+      lastName: body.lastname,
+      email: body.email,
+      password: body.password,
+    });
+    if(validationMsg.length){
+      return res.status(400).json({ validationError: validationMsg });
+    } else{
+      if (body.password === body.password2) {
+        return User
+          .create({
+            firstName: body.firstname,
+            lastName: body.lastname,
+            email: body.email,
+            userAccountType: 'Customer',
+            password: body.password,
+          })
+          .then((user) => {
+            const token = authService.issue({ id: user.id });
+            return res.status(200).json({ token, user });
+          })
+          .catch((err) => {
+            console.log(err);
+            return res.status(500).json({ msg: 'Internal server error' });
+          });
+      } else{
+        return res.status(400).json({ msg: 'Passwords don\'t match' });
+      }    
+    } 
   };
 
   //PUT localhost:9000/private/user/image
