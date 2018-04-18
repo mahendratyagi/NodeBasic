@@ -1,4 +1,4 @@
-# express-rest-api-boilerplate
+# Resturent App
 
 > Express REST API with JWT Authentication and support for sqlite, mysql, and postgresql
 
@@ -36,7 +36,7 @@ Start by cloning this repository
 
 ```sh
 # HTTPS
-$ git clone https://github.com/aichbauer/express-rest-api-boilerplate.git
+$ git clone https://github.com/dhruvkumar001/restaurant_api
 ```
 
 then
