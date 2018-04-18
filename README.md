@@ -579,5 +579,5 @@ Optional:
 
 ## LICENSE
 
-MIT © Lukas Aichbauer
+MIT © Mean Dhruv
 
