@@ -49,11 +49,11 @@ const UserController = () => {
         i++;
         isInvalid = 1;
       } 
-      if(!validationHelper.validPassword(body.password)){
+      /*if(!validationHelper.validPassword(body.password)){
         validationMsg[i] = 'Password Should Contain Atleast 8 Characters';
         i++;
         isInvalid = 1;
-      }
+      }*/
       if(isInvalid == 1){
         return res.status(400).json({ validationError: validationMsg });
       }

@@ -1,26 +1,25 @@
 {
-  "name": "express-rest-api-boilerplate",
+  "name": "mezo",
   "version": "0.0.0",
   "author": "Lukas Aichbauer <l.aichbauer@gmail.com>",
   "licence": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aichbauer/express-rest-api-boilerplate.git"
+    "url": "git+https://github.com/aichbauer/mezo.git"
   },
-  "homepage": "https://github.com/aichbauer/express-rest-api-boilerplate#readme",
+  "homepage": "https://github.com/aichbauer/mezo#readme",
   "bugs": {
-    "url": "https://github.com/aichbauer/express-rest-api-boilerplate/issues"
+    "url": "https://github.com/aichbauer/mezo/issues"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development && node ./api/api.js",
     "lint": "eslint ./api/. ./config/. ./test/.",
     "start": "npm run nodemon",
-    "poststart": "npm run create-mysql-db",
     "nodemon": "nodemon --exec npm run dev",
     "prepush": "npm test",
     "pretest": "npm run lint",
     "production": "cross-env NODE_ENV=production && node ./api/api.js",
-    "test": "npm run create-mysql-db; cross-env NODE_ENV=test && nyc ava -s",
+    "test": "cross-env NODE_ENV=test && nyc ava -s",
     "test-ci": "nyc ava --no-color"
   },
   "babel": {

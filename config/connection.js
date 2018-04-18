@@ -1,8 +1,8 @@
 const development = {
-  database: 'testmysql_nodejs',
-  username: 'sujay',
-  password: '123456',
-  host: '192.168.3.92',
+  database: 'nodeapp',
+  username: 'root',
+  password: '',
+  host: 'localhost',
   dialect: 'mysql',
 };
 
