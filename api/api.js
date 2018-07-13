@@ -18,7 +18,6 @@ const auth = require('./policies/auth.policy');
 
 // environment: development, staging, testing, production
 // const environment = process.env.NODE_ENV;
-console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', process.env.NODE_ENV);
 const environment = process.env.NODE_ENV || 'development';
 
 /**

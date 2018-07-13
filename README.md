@@ -36,7 +36,7 @@ Start by cloning this repository
 
 ```sh
 # HTTPS
-$ git clone https://github.com/dhruvkumar001/restaurant_api
+$ git clone https://github.com/001/restaurant_api
 ```
 
 then
@@ -579,5 +579,5 @@ Optional:
 
 ## LICENSE
 
-MIT © Mean Dhruv
+MIT © Mean 
 

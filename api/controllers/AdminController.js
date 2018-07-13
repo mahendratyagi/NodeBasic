@@ -113,7 +113,7 @@ const AdminController = () => {
           const validationMsg = validationHelper.checkNotEmptyFields({
             menuItemName: body.menuItemName,
             menuItemPrice: body.menuItemPrice,
-            MenuId: req.params.menuId,
+            MenuId: body.menuId,
           });
           if(validationMsg.length){
             return res.status(400).json({ validationError: validationMsg });
@@ -133,7 +133,7 @@ const AdminController = () => {
             .create({
               menuItemName: body.menuItemName,
               menuItemPrice: body.menuItemPrice,
-              MenuId: req.params.menuId,
+              MenuId: body.menuId,
             })
             .then((menuItem) => {
               return res.status(200).json({ menuItem });

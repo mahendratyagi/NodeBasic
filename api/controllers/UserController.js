@@ -119,19 +119,30 @@ const UserController = () => {
         },
       })
       .then((User) => {
-        return User.update({
+        const body = req.body;
+        let validationMsg = validationHelper.checkNotEmptyFields({
           firstName: body.firstname,
           lastName: body.lastname,
-          email: body.email,
+          // email: body.email,
           password: body.password,
-        })
-        .then((updatedUser) => {
-          return res.status(200).json({ updatedUser });
-        })
-        .catch((err) => {
-          console.log(err);
-          return res.status(500).json({ msg: 'Could Not Update User' });
         });
+        if(validationMsg.length){
+          return res.status(400).json({ validationError: validationMsg });
+        } else{ 
+          return User.update({
+            firstName: body.firstname,
+            lastName: body.lastname,
+            // email: body.email,
+            password: body.password,
+          })
+          .then((updatedUser) => {
+            return res.status(200).json({ updatedUser });
+          })
+          .catch((err) => {
+            console.log(err);
+            return res.status(500).json({ msg: 'Could Not Update User' });
+          });
+        }        
       })
       .catch((err) => {
         console.log(err);
@@ -147,19 +158,26 @@ const UserController = () => {
     const body = req.body;
 
     if (req.token.id) {
-      return Cart
-      .create({
-        cartDate: body.cartDate,
-        cartTime: body.cartTime,
-        UserId: req.token.id
-      })
-      .then((cart) => {
-        return res.status(200).json({ cart });
-      })
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).json({ msg: 'Internal server error' });
-      });
+      let validationMsg = validationHelper.checkNotEmptyFields({
+          cartTime: body.cartTime,
+          cartDate: body.cartDate
+        });
+        if(validationMsg.length){
+          return res.status(400).json({ validationError: validationMsg });
+        } else{
+          return Cart.create({
+                  cartDate: body.cartDate,
+                  cartTime: body.cartTime,
+                  UserId: req.token.id
+                })
+                .then((cart) => {
+                  return res.status(200).json({ cart });
+                })
+                .catch((err) => {
+                  console.log(err);
+                  return res.status(500).json({ msg: 'Internal server error' });
+                });
+        }      
     }
   };
 
@@ -168,21 +186,31 @@ const UserController = () => {
     const body = req.body;
 
     if (req.token.id) {
-      
-      return CartItem
-      .create({
-        cartDate: body.cartDate,
-        cartTime: body.cartTime,
-        MenuItemId: body.MenuItemId,
-        CartId: req.params.cartId
-      })
-      .then((cartItem) => {
-        return res.status(200).json({ cartItem });
-      })
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).json({ msg: 'Internal server error' });
-      });
+      let validationMsg = validationHelper.checkNotEmptyFields({
+          cartTime: body.cartTime,
+          cartDate: body.cartDate,
+          MenuItemId: body.MenuItemId
+        });
+        if(validationMsg.length){
+          return res.status(400).json({ validationError: validationMsg });
+        } else{
+          return CartItem
+          .create({
+            cartDate: body.cartDate,
+            cartTime: body.cartTime,
+            MenuItemId: body.MenuItemId,
+            CartId: body.cartId
+          })
+          .then((cartItem) => {
+            return res.status(200).json({ cartItem });
+          })
+          .catch((err) => {
+            console.log(err);
+            return res.status(500).json({ msg: 'Internal server error' });
+          });
+        }
+    }else {
+      return res.status(500).json({ msg: 'cartId, MenuItemId is required' });
     }
   };
 
@@ -239,7 +267,7 @@ const UserController = () => {
 
   //GET localhost:9000/private/users
   const getAll = (req, res) => {
-    User
+        User
       .findAll()
       .then((users) => res.status(200).json({ users }))
       .catch((err) => {
